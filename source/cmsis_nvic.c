@@ -35,7 +35,7 @@
  * require targets based on them to implement their own versions of these
  * functions */
 /* The same applies for Cortex-M0+ targets as VTOR is not always present */
-#if !defined(TARGET_LIKE_CORTEX_M0) && !defined(TARGET_LIKE_CORTEX_M0PLUS)
+#if (!defined(TARGET_LIKE_CORTEX_M0) && !defined(TARGET_LIKE_CORTEX_M0PLUS)) || defined(YOTTA_CFG_CMSIS_NVIC_HAS_VTOR)
 
 void NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
 {
@@ -43,8 +43,8 @@ void NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
     uint32_t i;
 
     /* Copy and switch to dynamic vectors if the first time called */
-    if (SCB->VTOR == NVIC_FLASH_VECTOR_ADDRESS) {
-        uint32_t *old_vectors = vectors;
+    if (SCB->VTOR != NVIC_RAM_VECTOR_ADDRESS) {
+        uint32_t *old_vectors = (uint32_t *) NVIC_FLASH_VECTOR_ADDRESS;
         vectors = (uint32_t *) NVIC_RAM_VECTOR_ADDRESS;
         for (i = 0; i < NVIC_NUM_VECTORS; i++) {
             vectors[i] = old_vectors[i];
@@ -59,5 +59,9 @@ uint32_t NVIC_GetVector(IRQn_Type IRQn)
     uint32_t *vectors = (uint32_t *) SCB->VTOR;
     return vectors[IRQn + NVIC_USER_IRQ_OFFSET];
 }
+
+#elif !defined(YOTTA_CFG_CMSIS_NVIC_HAS_CUSTOM_VTOR)
+
+#error The target should define yotta config cmsis-nvic.has-vtor, or cmsis-nvic.has-custom-vtor + implement NVIC_SetVector/NVIC_GetVector
 
 #endif /* !defined(TARGET_LIKE_CORTEX_M0) && !defined(TARGET_LIKE_CORTEX_M0PLUS) */

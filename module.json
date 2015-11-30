@@ -1,9 +1,11 @@
 {
   "name": "cmsis-core",
-  "version": "0.4.0",
+  "version": "1.1.0",
   "description": "CMSIS-Core",
   "keywords": [
-    "cmsis"
+    "cmsis",
+    "mbed",
+    "mbed-official"
   ],
   "author": "Bogdan Marinescu <bogdan.marinescu@arm.com>",
   "repository": {
@@ -27,16 +29,19 @@
   ],
   "targetDependencies": {
     "silabs": {
-      "cmsis-core-silabs": "~0.1.0"
+      "cmsis-core-silabs": "^1.0.0"
     },
     "freescale": {
-      "cmsis-core-freescale": "~0.2.0"
+      "cmsis-core-freescale": "^1.0.0"
     },
     "st": {
       "cmsis-core-st": "tridonic-com/cmsis-core-st#tridonic"
     },
     "nordic": {
-      "cmsis-core-nordic": "~0.0.1"
+      "cmsis-core-nordic": "^1.0.0"
+    },
+    "cordio": {
+      "cmsis-core-cordio": "~0.0.2"
     }
   }
 }
