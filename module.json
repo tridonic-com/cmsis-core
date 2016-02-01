@@ -35,7 +35,7 @@
       "cmsis-core-freescale": "^1.0.0"
     },
     "st": {
-      "cmsis-core-st": "tridonic-com/cmsis-core-st#tridonic"
+      "cmsis-core-st": "tridonic-com/cmsis-core-st#1.0.0-tri-0.0.2"
     },
     "nordic": {
       "cmsis-core-nordic": "^1.0.0"
